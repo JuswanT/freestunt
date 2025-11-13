@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cegah Stunting - Investasi Masa Depan Bangsa</title>
+
+    <!-- 1. Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- 2. Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 3. AOS (Animate on Scroll) Library (CDN) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- 4. Swiper.js (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- 5. Font Awesome (untuk Ikon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- 6. Kustomisasi Tailwind & CSS Kustom -->
+    <style>
+        /* Terapkan smooth scroll ke <html> untuk kompatibilitas terbaik */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Menggunakan font Inter sebagai default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Kelas kustom untuk teks gradien */
+        .gradient-text {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Kustomisasi untuk Swiper.js */
+        .swiper-pagination-bullet-active {
+            background-color: #3b82f6 !important;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #3b82f6 !important;
+            transform: scale(0.7);
+        }
+
+        /* Animasi "float" untuk gambar hero */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* CSS untuk Animasi Menu Mobile */
+        #mobile-menu {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform-origin: top;
+        }
+        .menu-closed {
+            opacity: 0;
+            transform: scaleY(0.95) translateY(-10px);
+            pointer-events: none; /* Penting agar tidak bisa diklik saat tersembunyi */
+        }
+        .menu-open {
+            opacity: 1;
+            transform: scaleY(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        /* CSS untuk Kartu Solusi Teknologi */
+        .solusi-card {
+            background-color: white;
+            border-radius: 36px;
+            padding: 28px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-out;
+            opacity: 0; /* Dimulai transparan untuk AOS */
+        }
+
+        .solusi-card:hover {
+            background-color: #3b82f6; /* Biru dari tema (blue-600) */
+            transform: scale(1.05); /* Sedikit membesar */
+            color: white;
+        }
+        
+        /* Warna-warni untuk kartu lain */
+        .solusi-card.ungu:hover {
+            background-color: #8b5cf6; /* Warna ungu */
+        }
+        .solusi-card.hijau:hover {
+            background-color: #22c55e; /* Warna hijau */
+        }
+
+
+        /* Judul yang terlihat di awal */
+        .solusi-title {
+            font-size: 1.75rem; 
+            font-weight: 700;
+            color: #3b82f6; /* Biru dari tema (blue-600) */
+            line-height: 1.3;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out, color 0.3s ease-out;
+            opacity: 1; /* Terlihat jelas */
+            transform: translateY(0); /* Posisi awal */
+        }
+        
+        /* Warna-warni untuk judul kartu */
+        .solusi-card.ungu .solusi-title { color: #8b5cf6; }
+        .solusi-card.hijau .solusi-title { color: #22c55e; }
+
+        
+        .solusi-card:hover .solusi-title {
+            opacity: 0;
+            transform: translateY(-20px); /* Geser ke atas saat hover */
+            color: white; /* Transisi ke putih selagi menghilang */
+        }
+
+        /* Deskripsi yang tersembunyi */
+        .solusi-description {
+            font-size: 1rem; /* 16px */
+            font-weight: 400;
+            position: absolute;
+            top: 28px;
+            left: 28px;
+            right: 28px;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            transition-delay: 0.1s; /* Muncul sedikit setelah judul hilang */
+            opacity: 0; /* Tersembunyi di awal */
+            transform: translateY(20px); /* Mulai dari 20px di bawah */
+        }
+
+        .solusi-card:hover .solusi-description {
+            opacity: 1;
+            transform: translateY(0); /* Geser ke posisi normal (y=0) */
+        }
+        /* ===== Akhir CSS Kartu Solusi ===== */
+
+        /* CSS Gradien Animasi Background "Rich" */
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-bg-rich {
+            /* Warna "rich" dari tema: biru dan ungu */
+            background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #3b82f6, #8b5cf6);
+            background-size: 400% 400%;
+            animation: moveGradient 15s ease-in-out infinite;
+        }
+        /* ===== Akhir CSS Gradien Animasi ===== */
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- ===== Header / Navigasi ===== -->
+    <header id="header" class="bg-white/90 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-bold text-blue-600">
+                <i class="fas fa-child-reaching mr-2"></i>Stunt<span class="text-purple-500">Free</span>
+            </a>
+
+            <!-- Menu Desktop -->
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#hero" class="text-gray-600 hover:text-blue-600 transition-colors">Beranda</a>
+                <a href="#apa-itu" class="text-gray-600 hover:text-blue-600 transition-colors">Definisi</a>
+                <a href="#pencegahan" class="text-gray-600 hover:text-blue-600 transition-colors">Pencegahan</a>
+                <a href="#fakta" class="text-gray-600 hover:text-blue-600 transition-colors">Fakta/Mitos</a>
+                <a href="#teknologi" class="text-gray-600 hover:text-blue-600 transition-colors">Teknologi</a>
+                <a href="#aksi" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-full shadow-lg transition-transform hover:scale-105">
+                    Mulai Aksi
+                </a>
+            </div>
+
+            <!-- Tombol Menu Mobile -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-blue-600">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Menu Mobile (Dropdown) -->
+        <div id="mobile-menu" class="md:hidden bg-white shadow-lg absolute top-full left-0 right-0 menu-closed">
+            <a href="#hero" class="block px-6 py-3 text-gray-600 hover:bg-blue-50">Beranda</a>
+            <a href="#apa-itu" class="block px-6 py-3 text-gray-600 hover:bg-blue-50">Definisi</a>
+            <a href="#pencegahan" class="block px-6 py-3 text-gray-600 hover:bg-blue-50">Pencegahan</a>
+            <a href="#fakta" class="block px-6 py-3 text-gray-600 hover:bg-blue-50">Fakta/Mitos</a>
+            <a href="#teknologi" class="block px-6 py-3 text-gray-600 hover:bg-blue-50">Teknologi</a>
+            <a href="#aksi" class="block px-6 py-4 text-center bg-blue-500 text-white font-semibold hover:bg-blue-600">Mulai Aksi</a>
+        </div>
+    </header>
+    <!-- ===== Akhir Header ===== -->
+
+    <main>
+        <!-- ===== Hero Section ===== -->
+        <section id="hero" class="pt-32 pb-16 min-h-screen flex items-center bg-white">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+                <!-- Kolom Teks Hero -->
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <span class="block text-blue-600 font-semibold mb-2" data-aos="fade-up">#CegahStuntingItuPenting</span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight" data-aos="fade-up" data-aos-delay="100">
+                        Tumbuh Kembang Optimal, 
+                        <span class="gradient-text">Generasi Emas</span> Indonesia.
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="200">
+                        Stunting bukan sekadar masalah tinggi badan, tapi investasi masa depan bangsa. Mari pahami, cegah, dan ciptakan generasi penerus yang sehat, cerdas, dan produktif.
+                    </p>
+                    <div class="flex gap-4" data-aos="fade-up" data-aos-delay="300">
+                        <a href="#pencegahan" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-full shadow-lg text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                            Cari Tahu Cara <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#fakta" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105">
+                            Fakta & Mitos
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Kolom Gambar Hero -->
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://img.freepik.com/free-vector/active-boy-simple-cartoon-character_1308-105457.jpg?ga=GA1.1.1215167215.1762944080&semt=ais_hybrid&w=740&q=80" 
+                         alt="Ilustrasi Anak Sehat" 
+                         class="rounded-full shadow-2xl animate-float"
+                         data-aos="zoom-in-left"
+                         data-aos-delay="200"
+                         onerror="this.src='https://img.freepik.com/free-vector/active-boy-simple-cartoon-character_1308-105457.jpg?ga=GA1.1.1215167215.1762944080&semt=ais_hybrid&w=740&q=80'">
+                </div>
+            </div>
+        </section>
+        <!-- ===== Akhir Hero Section ===== -->
+
+        <!-- ===== Statistik Kunci ===== -->
+        <section id="statistik" class="text-white py-20 animated-bg-rich">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Fakta Kunci Stunting di Indonesia</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    
+                    <!-- Kartu Statistik 1 -->
+                    <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-chart-line text-5xl text-white/80 mb-4"></i>
+                        <h3 class="text-5xl font-extrabold mb-2" id="stat1">0%</h3>
+                        <p class="text-lg text-white/90">Prevalensi Stunting (SSGI 2023)</p>
+                    </div>
+
+                    <!-- Kartu Statistik 2 -->
+                    <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-baby text-5xl text-white/80 mb-4"></i>
+                        <h3 class="text-5xl font-extrabold mb-2" id="stat2">0</h3>
+                        <p class="text-lg text-white/90">Hari Pertama Kehidupan (HPK) adalah Kunci</p>
+                    </div>
+
+                    <!-- Kartu Statistik 3 -->
+                    <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-brain text-5xl text-white/80 mb-4"></i>
+                        <h3 class="text-5xl font-extrabold mb-2" id="stat3">0%</h3>
+                        <p class="text-lg text-white/90">Perkembangan Otak Terjadi di 2 Tahun Pertama</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ===== Akhir Statistik Kunci ===== -->
+
+        <!-- ===== Definisi Stunting ===== -->
+        <section id="apa-itu" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+                <!-- Kolom Gambar Definisi -->
+                <div class="md:w-1/2" data-aos="fade-right">
+                    <img src="https://img.freepik.com/vektor-gratis/ilustrasi-saudara-kandung-digambar-tangan_23-2149604227.jpg?t=st=1762943723~exp=1762947323~hmac=088991154cf0c07de4a154572d046203ac81891801e2fa343c5f3bbd9e3914ee&w=360" 
+                         alt="Perbandingan Tinggi Badan Anak Stunting dan Normal" 
+                         class="rounded-2xl shadow-xl w-full h-auto"
+                         onerror="this.src='https://img.freepik.com/vektor-gratis/ilustrasi-saudara-kandung-digambar-tangan_23-2149604227.jpg?t=st=1762943723~exp=1762947323~hmac=088991154cf0c07de4a154572d046203ac81891801e2fa343c5f3bbd9e3914ee&w=360'">
+                </div>
+                <!-- Kolom Teks Definisi -->
+                <div class="md:w-1/2" data-aos="fade-left" data-aos-delay="150">
+                    <span class="block text-blue-600 font-semibold mb-2">DEFINISI</span>
+                    <h2 class="text-4xl font-extrabold text-gray-900 mb-6">Apa Sebenarnya Stunting Itu?</h2>
+                    <p class="text-lg text-gray-600 mb-4">
+                        Stunting adalah kondisi gagal tumbuh pada anak balita (bayi di bawah lima tahun) akibat kekurangan gizi kronis sehingga anak terlalu pendek untuk usianya.
+                    </p>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Kekurangan gizi ini terjadi sejak bayi dalam kandungan hingga awal kehidupan (1000 HPK). Stunting tidak hanya menghambat pertumbuhan fisik, tapi juga <strong class="text-purple-600">perkembangan kognitif dan kecerdasan anak</strong>.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                            <div><strong>Dampak:</strong> Kecerdasan menurun, rentan penyakit, produktivitas rendah saat dewasa.</div>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-search-plus text-blue-500 mr-3 mt-1"></i>
+                            <div><strong>Penyebab:</strong> Gizi buruk kronis, sanitasi tidak layak, kurangnya pengetahuan ibu.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- ===== Akhir Definisi Stunting ===== -->
+
+        <!-- ===== Pencegahan ===== -->
+        <section id="pencegahan" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-4" data-aos="fade-up">Kunci Emas Pencegahan Stunting</h2>
+                <p class="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Fokus pada 1000 Hari Pertama Kehidupan (HPK) adalah strategi paling efektif untuk mencegah stunting.
+                </p>
+                
+                <!-- Grid Kartu Pencegahan -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Kartu 1: Gizi Ibu Hamil -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-female text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Gizi Ibu Hamil</h3>
+                        <p class="text-gray-600">Memastikan ibu hamil mendapatkan asupan gizi seimbang (protein, zat besi, asam folat) untuk janin sehat.</p>
+                    </div>
+                    <!-- Kartu 2: ASI Eksklusif -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-purple-100 text-purple-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-baby-carriage text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">ASI Eksklusif</h3>
+                        <p class="text-gray-600">Pemberian ASI saja selama 6 bulan pertama kehidupan bayi untuk imunitas dan gizi terbaik.</p>
+                    </div>
+                    <!-- Kartu 3: MPASI -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                        <div class="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-utensils text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">MPASI Berkualitas</h3>
+                        <p class="text-gray-600">Setelah 6 bulan, berikan Makanan Pendamping ASI yang kaya protein hewani dan gizi mikro.</p>
+                    </div>
+                    <!-- Kartu 4: Sanitasi -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                        <div class="bg-yellow-100 text-yellow-600 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-hands-wash text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Sanitasi & Imunisasi</h3>
+                        <p class="text-gray-600">Akses air bersih, jamban sehat, dan imunisasi lengkap untuk melindungi anak dari infeksi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ===== Akhir Pencegahan ===== -->
+
+        <!-- ===== Fakta vs Mitos (Swiper) ===== -->
+        <section id="fakta" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-12" data-aos="fade-up">Mitos vs Fakta Seputar Stunting</h2>
+                
+                <!-- Swiper -->
+                <div class="swiper mySwiper" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="swiper-wrapper pb-16">
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide bg-white rounded-2xl shadow-xl overflow-hidden">
+                            <div class="p-8">
+                                <span class="text-sm font-bold text-red-500 bg-red-100 px-3 py-1 rounded-full">MITOS</span>
+                                <h3 class="text-2xl font-bold my-4">"Stunting itu faktor keturunan, orang tuanya pendek wajar anaknya pendek."</h3>
+                                <hr class="my-4">
+                                <span class="text-sm font-bold text-green-500 bg-green-100 px-3 py-1 rounded-full">FAKTA</span>
+                                <p class="text-gray-600 mt-4">
+                                    Faktor genetik hanya berpengaruh kecil (<15%) pada tinggi badan. Penyebab utama stunting adalah kekurangan gizi kronis dan infeksi berulang.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide bg-white rounded-2xl shadow-xl overflow-hidden">
+                            <div class="p-8">
+                                <span class="text-sm font-bold text-red-500 bg-red-100 px-3 py-1 rounded-full">MITOS</span>
+                                <h3 class="text-2xl font-bold my-4">"Stunting itu sama dengan gizi buruk (kurus kering)."</h3>
+                                <hr class="my-4">
+                                <span class="text-sm font-bold text-green-500 bg-green-100 px-3 py-1 rounded-full">FAKTA</span>
+                                <p class="text-gray-600 mt-4">
+                                    Tidak selalu. Anak stunting bisa terlihat gemuk atau 'normal' (pendek-gemuk). Stunting adalah masalah gizi kronis (lama), sementara gizi buruk adalah kondisi akut (baru terjadi).
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide bg-white rounded-2xl shadow-xl overflow-hidden">
+                            <div class="p-8">
+                                <span class="text-sm font-bold text-red-500 bg-red-100 px-3 py-1 rounded-full">MITOS</span>
+                                <h3 class="text-2xl font-bold my-4">"Anak stunting tidak bisa diperbaiki lagi setelah lewat 2 tahun."</h3>
+                                <hr class="my-4">
+                                <span class="text-sm font-bold text-green-500 bg-green-100 px-3 py-1 rounded-full">FAKTA</span>
+                                <p class="text-gray-600 mt-4">
+                                    Meskipun 1000 HPK (hingga 2 tahun) adalah periode emas, intervensi gizi dan stimulasi setelah usia 2 tahun tetap penting untuk mengejar tumbuh kembang, walau lebih sulit.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="swiper-slide bg-white rounded-2xl shadow-xl overflow-hidden">
+                            <div class="p-8">
+                                <span class="text-sm font-bold text-red-500 bg-red-100 px-3 py-1 rounded-full">MITOS</span>
+                                <h3 class="text-2xl font-bold my-4">"Yang penting anak kenyang, tidak perlu lauk pauk mahal."</h3>
+                                <hr class="my-4">
+                                <span class="text-sm font-bold text-green-500 bg-green-100 px-3 py-1 rounded-full">FAKTA</span>
+                                <p class="text-gray-600 mt-4">
+                                    Anak butuh protein hewani (telur, ikan, ayam) untuk mencegah stunting, bukan sekadar kenyang oleh karbohidrat (nasi/bubur). Protein hewani tidak harus mahal.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kontrol Swiper -->
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+
+            </div>
+        </section>
+        <!-- ===== Akhir Fakta vs Mitos ===== -->
+
+        <!-- ===== Solusi Teknologi ===== -->
+        <section id="teknologi" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-4" data-aos="fade-up">Inovasi Digital untuk Generasi Emas</h2>
+                <p class="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Teknologi memainkan peran krusial dalam mempercepat deteksi dini dan intervensi stunting di Indonesia.
+                </p>
+
+                <!-- Grid Kartu Solusi -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Kartu 1: Aplikasi Posyandu -->
+                    <div class="solusi-card" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="solusi-title">
+                            Aplikasi<br>Posyandu
+                        </h3>
+                        <p class="solusi-description">
+                            Mendigitalkan pencatatan Kartu Menuju Sehat (KMS) untuk pemantauan *real-time* oleh kader dan orang tua. Ini mempercepat identifikasi anak yang berisiko stunting.
+                        </p>
+                    </div>
+        
+                    <!-- Kartu 2: Telekonsultasi Gizi -->
+                    <div class="solusi-card ungu" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="solusi-title">
+                            Telekonsultasi<br>Gizi
+                        </h3>
+                        <p class="solusi-description">
+                            Menjembatani kesenjangan geografis, memungkinkan orang tua di daerah terpencil untuk berkonsultasi langsung dengan ahli gizi dan dokter anak melalui video call atau chat.
+                        </p>
+                    </div>
+        
+                    <!-- Kartu 3: AI & Deteksi Dini -->
+                    <div class="solusi-card hijau" data-aos="fade-up" data-aos-delay="400">
+                        <h3 class="solusi-title">
+                            AI &<br>Deteksi Dini
+                        </h3>
+                        <p class="solusi-description">
+                            Menggunakan *Artificial Intelligence* (AI) untuk menganalisis data dalam jumlah besar dan mengidentifikasi pola risiko stunting, membantu pemerintah mengambil keputusan berbasis data.
+                        </p>
+                    </div>
+        
+                </div>
+                <!-- Akhir Grid Kartu Solusi -->
+
+            </div>
+        </section>
+        <!-- ===== Akhir Solusi Teknologi ===== -->
+
+        <!-- ===== Call to Action (CTA) ===== -->
+        <section id="aksi" class="py-24 animated-bg-rich">
+            <div class="container mx-auto px-6 text-center" data-aos="zoom-in">
+                <h2 class="text-4xl font-extrabold text-white mb-6">Ayo Bersama, Wujudkan Generasi Bebas Stunting!</h2>
+                <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
+                    Aksi Anda hari ini menentukan masa depan mereka. Mulai dari lingkungan terdekat, pastikan setiap anak mendapatkan haknya untuk tumbuh optimal.
+                </p>
+                <a href="#" class="bg-white hover:bg-gray-100 text-blue-600 px-10 py-4 rounded-full shadow-lg text-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <i class="fas fa-hands-helping mr-2"></i> Saya Ikut Beraksi
+                </a>
+            </div>
+        </section>
+        <!-- ===== Akhir Call to Action ===== -->
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="bg-gray-900 text-gray-400 py-16">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Kolom 1: Logo & Deskripsi -->
+            <div>
+                <a href="#" class="text-3xl font-bold text-white mb-4 block">
+                    <i class="fas fa-child-reaching mr-2"></i>Stunt<span class="text-purple-400">Free</span>
+                </a>
+                <p class="text-sm">Platform edukasi untuk Indonesia bebas stunting. Dibuat untuk Lomba Desain Web 2025.</p>
+            </div>
+
+            <!-- Kolom 2: Navigasi Cepat -->
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Navigasi</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#apa-itu" class="hover:text-white">Apa Itu Stunting?</a></li>
+                    <li><a href="#pencegahan" class="hover:text-white">Pencegahan</a></li>
+                    <li><a href="#fakta" class="hover:text-white">Fakta & Mitos</a></li>
+                    <li><a href="#teknologi" class="hover:text-white">Teknologi</a></li>
+                    <li><a href="#aksi" class="hover:text-white">Mulai Aksi</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 3: Sumber Daya -->
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Sumber Daya</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="https://www.kemkes.go.id/" target="_blank" rel="noopener noreferrer" class="hover:text-white">Kemenkes RI</a></li>
+                    <li><a href="https://ayosehat.kemkes.go.id/topik-penyakit/defisiensi-nutrisi/stunting" target="_blank" rel="noopener noreferrer" class="hover:text-white">Info Stunting (Kemkes)</a></li>
+                    <li><a href="https://www.unicef.org/indonesia/id/gizi" target="_blank" rel="noopener noreferrer" class="hover:text-white">UNICEF Indonesia (Gizi)</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 4: Media Sosial -->
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Ikuti Kami</h4>
+                <div class="flex space-x-4 text-2xl">
+                    <a href="#" class="hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/juswan.911" class="hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 text-center border-t border-gray-700 pt-8 mt-12">
+            <p class="text-sm">&copy; 2025 StuntFree. Didesain dengan <i class="fas fa-heart text-red-500"></i> untuk Indonesia.</p>
+        </div>
+    </footer>
+    <!-- ===== Akhir Footer ===== -->
+
+    <!-- Tombol Back to Top -->
+    <a id="to-top" href="#hero" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all opacity-0 scale-90">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+
+    <!-- ===== Skrip JavaScript ===== -->
+
+    <!-- 1. AOS (Animate on Scroll) JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- 2. Swiper.js JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- 3. CountUp.js (untuk statistik) JS -->
+    <script src="https://cdn.jsdelivr.net/npm/countup.js@2.0.8/dist/countUp.umd.min.js"></script>
+
+    <!-- 4. Skrip Kustom -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // Inisialisasi AOS
+            AOS.init({
+                offset: 100,   // Offset sebelum animasi dimulai
+            });
+
+            // Inisialisasi Swiper
+            new Swiper('.mySwiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 2,
+                    },
+                },
+            });
+
+            // Inisialisasi CountUp
+            const startCounterOnScroll = (elementId, endVal, options) => {
+                const element = document.getElementById(elementId);
+                if (!element) return; // Tambahkan penjagaan jika elemen tidak ditemukan
+                let hasStarted = false;
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !hasStarted) {
+                            hasStarted = true;
+                            // PERBAIKAN PENTING: Menggunakan 'countUp.CountUp' (c kecil) agar sesuai CDN UMD
+                            const counter = new countUp.CountUp(elementId, endVal, options);
+                            if (counter.error) {
+                                console.error(counter.error);
+                            } else {
+                                counter.start();
+                            }
+                            observer.unobserve(element);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                observer.observe(element);
+            };
+
+            // Panggil fungsi untuk setiap statistik
+            startCounterOnScroll('stat1', 21.6, { decimalPlaces: 1, duration: 2.5, suffix: '%' });
+            startCounterOnScroll('stat2', 1000, { duration: 2.5, separator: '.' });
+            startCounterOnScroll('stat3', 80, { duration: 2.5, suffix: '%' });
+
+            // Logika Menu Mobile (Sesuai permintaan Anda)
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileIcon = mobileMenuBtn.querySelector('i');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('menu-closed');
+                mobileMenu.classList.toggle('menu-open');
+                
+                // Toggle icon animasi (opsional)
+                if (mobileMenu.classList.contains('menu-open')) {
+                    mobileIcon.classList.remove('fa-bars');
+                    mobileIcon.classList.add('fa-times');
+                } else {
+                    mobileIcon.classList.remove('fa-times');
+                    mobileIcon.classList.add('fa-bars');
+                }
+            });
+
+            // Tutup menu mobile saat link di-klik
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('menu-closed');
+                    mobileMenu.classList.remove('menu-open');
+                    mobileIcon.classList.remove('fa-times');
+                    mobileIcon.classList.add('fa-bars');
+                });
+            });
+
+            // Logika Tombol "Back to Top" (Sesuai permintaan Anda)
+            const toTopBtn = document.getElementById('to-top');
+            
+            window.addEventListener('scroll', () => {
+                // Logika Tombol "Back to Top"
+                if (window.scrollY > 300) {
+                    toTopBtn.classList.remove('opacity-0', 'scale-90');
+                    toTopBtn.classList.add('opacity-100', 'scale-100');
+                } else {
+                    toTopBtn.classList.add('opacity-0', 'scale-90');
+                    toTopBtn.classList.remove('opacity-100', 'scale-100');
+                }
+
+                // Logika "shrink" header (dari kode sebelumnya, agar tidak hilang)
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('py-3');
+                    header.classList.remove('py-4');
+                } else {
+                    header.classList.remove('py-3');
+                    header.classList.add('py-4');
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
