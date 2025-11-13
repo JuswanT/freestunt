@@ -47,7 +47,3 @@ Proyek ini sengaja dibuat dalam **satu file tunggal** untuk memenuhi kriteria po
 └── index.html
 
 Seluruh CSS kustom (termasuk animasi gradien dan kartu) dan JavaScript kustom (termasuk logika menu dan *smooth scroll*) berada di dalam *file* index.html.
-
-## **📄 Lisensi**
-
-Proyek ini dilisensikan di bawah Lisensi MIT.
